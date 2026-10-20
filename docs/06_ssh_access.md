@@ -1,5 +1,6 @@
 ---
 log:
+2026-10-20: Aligned the README with experimental native Windows SSH support and documented prerequisites and remaining platform limitations.
 2026-10-20: Passed the native Windows 11 / Python 3.12.14 live CPU SSH test: generated ProxyCommand, identity path with spaces, remote marker execution, and recorded-endpoint cleanup; the final sessions query reported no active assignments. SSH CI also passed on Windows, Linux, and macOS.
 2026-10-20: Fixed Windows OpenSSH ProxyCommand argument quoting, local null-device selection, and cleanup signal registration. Added native Windows process/OpenSSH regression tests and a three-platform SSH CI job; live Colab verification remains required before claiming Windows support.
 2026-09-25: Cleaned up keep-alive daemon references in session creation and teardown documentation.
@@ -154,10 +155,17 @@ Portable tests also check registration without SIGHUP and the local null
 device. Existing POSIX shell quoting and teardown tests remain in the suite.
 
 The SSH CI workflow runs these and the existing SSH tests on Windows, Linux,
-and macOS with Python 3.12. This covers SSH compatibility only. Interactive
-console behavior, local file editing, self-update, and a live Colab session
-require separate validation before the project's overall platform support
-statement can change.
+and macOS with Python 3.12. This covers SSH compatibility only.
+
+### Windows Support Status
+
+Native Windows support is experimental. The SSH workflow requires the Windows
+OpenSSH Client optional feature, with `ssh` and `ssh-keygen` available on `PATH`.
+The README documents installation from a repository checkout to use these fixes.
+Interactive console behavior still requires Windows validation. The native
+Windows test suite has known failures in help-output parsing, temporary-file
+editing, and headless REPL console setup. `colab update --install` remains limited
+to Linux and macOS; full native Windows feature parity is not claimed.
 
 `uv run python integration/repro_windows_ssh/test.py` provides a native Windows
 live test using cached OAuth2 credentials. It creates a CPU runtime, executes a
