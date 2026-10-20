@@ -7,7 +7,7 @@ Designed to support seamless developer productivity, headless automation, and AI
 [Demo](https://github.com/user-attachments/assets/656226a9-af13-4fdb-8eda-d7de747336a2)
 
 > [!NOTE]
-> **Platform support:** the Colab CLI currently supports **Linux and macOS** only. Windows is not supported at this time.
+> **Platform support:** Linux and macOS are supported. Native Windows support is **experimental**: SSH remote command execution and runtime cleanup have been verified on Windows 11 with Python 3.12 and Windows OpenSSH. Other Windows workflows are not fully validated; see [Windows SSH support](docs/06_ssh_access.md#windows-support-status) for prerequisites and limitations.
 
 > [!TIP]
 > Looking for in-notebook, interactive agent-assisted coding instead of a terminal workflow? See the [Colab MCP Server](https://github.com/googlecolab/colab-mcp).
@@ -36,6 +36,20 @@ uv tool install google-colab-cli
 # Using pip
 pip install google-colab-cli
 ```
+
+### Native Windows (Experimental)
+
+To use the Windows SSH fixes in this repository, install from a local checkout
+of its `main` branch rather than assuming the PyPI package includes them:
+
+```powershell
+uv tool install .
+```
+
+Install the Windows **OpenSSH Client** optional feature and ensure `ssh` and
+`ssh-keygen` are on `PATH`. Local interactive console workflows still need
+Windows validation, and local file editing has known temporary-file locking
+limitations. `colab update --install` supports Linux and macOS only.
 
 ---
 
@@ -182,6 +196,7 @@ For comprehensive architectural overviews and deep-dives into specific CLI sub-s
 * [File Management & Jupyter Contents API](docs/03_file_management.md)
 * [Authentication Providers & VM Automation](docs/04_automation_and_utility.md)
 * [Ephemeral Job Runner Design](docs/05_run_command.md)
+* [SSH Access and Windows Support](docs/06_ssh_access.md)
 
 To view interactive walkthroughs of eleven real-world automated scenarios, check out the [Demo Walkthroughs](docs/demos.md).
 
